@@ -31,11 +31,11 @@ function curl_post($url, array $post = NULL, array $options = array()) {
 
     $ch = curl_init();
     curl_setopt_array($ch, ($options + $defaults));
-    if(! $result = curl_exec($ch)) {
-        if ($result !== "0" && $result !== 0) {
-            $errors[] = curl_error($ch);
-        }
+    $result = curl_exec($ch);
+    if( $result === false ) {
+        $errors[] = 'CUrl error: ' . curl_error($ch);
     }
+
     curl_close($ch);
 
     $jresult = json_decode($result);
